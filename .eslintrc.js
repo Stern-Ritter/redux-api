@@ -26,6 +26,7 @@ module.exports = {
     "import/no-unresolved": "off",
     "import/extensions": ["warn", "never"],
     "import/prefer-default-export": "off",
+    "default-param-last": "off",
     "lines-between-class-members": [
       "error",
       "always",

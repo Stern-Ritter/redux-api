@@ -9,47 +9,51 @@ describe("combineReducer", () => {
     expect(combineReducer({})).toBeInstanceOf(Function);
   });
 
-  it("returns a reducer based on the config (initial state)", () => {
+  it("returns a reducer based on the initial state", () => {
     const reducer = combineReducer({
-      a: (state = 2, action={type: 'basic'}) => state,
-      b: (state = "hop", action={type:'basic'}) => state,
+      question: (
+        state = "Ultimate Question of Life, the Universe and Everything.",
+        action
+      ) => state,
+      answer: (state = 42, action) => state,
     });
     expect(reducer(undefined, { type: "unknown" })).toEqual({
-      a: 2,
-      b: "hop",
+      question: "Ultimate Question of Life, the Universe and Everything.",
+      answer: 42,
     });
   });
 
-  it("calls subreducers with proper values", () => {
-    type State = { a: number; b: number };
+  it("calls reducers with properties values", () => {
     const config = {
-      a: jest.fn((state = 5, action={type: 'basic'}) => state + action.payload),
-      b: jest.fn((state = 6, action={type: 'basic'}) => state - action.payload),
+      increasing: jest.fn((state, action) => state + action.payload),
+      decreasing: jest.fn((state, action) => state - action.payload),
     };
-    const reducer = combineReducer<State, { payload: number }>(config);
+    const reducer = combineReducer(config);
 
-    const state: State = {
-      a: 55,
-      b: 66,
+    const initialState = {
+      increasing: 1000,
+      decreasing: 1000,
     };
-    const action1 = { payload: 1 };
-    const newState1 = reducer(state, { payload: 1 });
+    const ten = { type: "basic", payload: 10};
+    const hundred = { type: "basic", payload: 100 };
 
-    expect(config.a).toHaveBeenCalledWith(55, action1);
-    expect(config.b).toHaveBeenCalledWith(66, action1);
+    let updatedState = reducer(initialState, ten);
 
-    expect(newState1).toEqual({
-      a: 56,
-      b: 65,
+    expect(config.increasing).toHaveBeenCalledWith(1000, ten);
+    expect(config.decreasing).toHaveBeenCalledWith(1000, ten);
+
+    expect(updatedState).toEqual({
+      increasing: 1010,
+      decreasing: 990,
     });
 
-    const action2 = { payload: 2 };
-    const newState2 = reducer(newState1, action2);
-    expect(config.a).toHaveBeenCalledWith(56, action2);
-    expect(config.b).toHaveBeenCalledWith(65, action2);
-    expect(newState2).toEqual({
-      a: 58,
-      b: 63,
+    updatedState = reducer(updatedState, hundred);
+
+    expect(config.increasing).toHaveBeenCalledWith(1010, hundred);
+    expect(config.decreasing).toHaveBeenCalledWith(990, hundred);
+    expect(updatedState).toEqual({
+      increasing: 1110,
+      decreasing: 890,
     });
   });
 });

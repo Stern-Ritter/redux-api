@@ -1,7 +1,7 @@
 import Store from "./Store";
 import { Reducer } from "./types";
 
-export default function configureStore<
+export default function createStore<
   State = any,
   Action = { type: string; payload?: any }
 >(
