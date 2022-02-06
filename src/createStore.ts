@@ -6,9 +6,9 @@ export default function configureStore<
   Action = { type: string; payload?: any }
 >(
   reducer: Reducer<State, Action>,
-  initialState?: State
+  preloadedState?: State
 ): Store<State, Action> {
-  const state = initialState as State;
+  const state = preloadedState as State;
   const store = new Store(reducer, state);
   return store;
 }

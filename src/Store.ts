@@ -14,6 +14,10 @@ export default class Store<
     this.subscribers = new Set([]);
   }
 
+  replaceReducer(reducer: Reducer<State, Action>) {
+    this.reducer = reducer;
+  }
+
   getState(): State {
     return this.state;
   }

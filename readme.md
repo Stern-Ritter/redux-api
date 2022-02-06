@@ -7,10 +7,9 @@
 
 ## Описание
 
-1. реализация имеет метод dispatch;
-2. реализация имеет метод subscribe;
-3. реализация имеет метод getState;
-4. реализация имеет метод replaceReducer;
-5. реализация имеет метод createStore (с поддержкой preloadedState);
-6. реализация имеет метод combineReducer;
-7. реализация имеет поддержку поддержка middlewares.
+1. реализован метод dispatch;
+2. реализован метод subscribe;
+3. реализован метод getState;
+4. реализован метод replaceReducer;
+5. реализована функция createStore (с поддержкой preloadedState);
+6. реализована функция combineReducer.

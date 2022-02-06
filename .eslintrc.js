@@ -31,6 +31,7 @@ module.exports = {
       "always",
       { exceptAfterSingleLine: true },
     ],
+    "no-param-reassign": ["error", { props: false }],
     "max-len": [
       "error",
       {
